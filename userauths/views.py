@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
+from userauths.models import User
 
-def RegisterView(request):
+def registerView(request):
     form = UserRegisterForm() 
 
     if request.method == "POST":
@@ -27,3 +28,31 @@ def RegisterView(request):
 
     context = {"form": form}
     return render(request, "userauths/sign-up.html", context)
+
+def loginView(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+       
+        
+        try:
+            user = User.objects.get(email = email)
+            user = authenticate(request,email=email,password=password)
+            
+            if user is not None:
+                login(request,user)
+                messages.success(request,"You are logged in")
+                return redirect("core:index")
+            else:
+                messages.success(request,"Incorrect Credentials")
+                return redirect("userauth:sign-in")
+                
+        except:
+            messages.success(request,"User does not exist")
+        
+    return render(request, "userauths/sign-in.html")
+
+def logoutView(request):
+    logout(request)
+    messages.success(request,"You have been logged out.")
+    return redirect("userauths:sign-in")
