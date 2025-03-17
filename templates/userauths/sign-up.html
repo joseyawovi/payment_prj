@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block content %}
+
 <section class="login-reg">
     <div class="overlay pt-120">
         <div class="container">
@@ -13,30 +15,36 @@
                     <div class="section-text text-center">
                         <h5 class="sub-title">Account</h5>
                         <h2 class="title">Welcome to Paylio</h2>
-                        <p class="dont-acc">Already have an account? <a href="">Login</a></p>
+                        <p class="dont-acc">Already have an account? <a href="{% url 'userauths:sign-in' %}">Login</a></p>
                     </div>
                     <form method="POST">
-                        <!-- {% csrf_token %} -->
+                        {% csrf_token %}
                         <div class="row">
                             <div class="col-12">
                                 <div class="single-input">
-                                    <input type="text" class="form-control" placeholder="Username">
+                                    <label for="{{ form.username.id_for_label }}">Username</label>
+                                    {{ form.username }}
                                 </div>
                                 <div class="single-input">
-                                    <input type="email" class="form-control" placeholder="Email Address">
+                                    <label for="{{ form.email.id_for_label }}">Email</label>
+                                    {{ form.email }}
                                 </div>
                                 <div class="single-input">
-                                    <input type="password" class="form-control" placeholder="Enter Password">
+                                    <label for="{{ form.password1.id_for_label }}">Password</label>
+                                    {{ form.password1 }}
                                 </div>
                                 <div class="single-input">
-                                    <input type="password" class="form-control" placeholder="Confirm Password">
+                                    <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                                    {{ form.password2 }}
                                 </div>
                                 <button class="cmn-btn w-100" type="submit">Sign Up</button>
                             </div>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
 </section>
+{% endblock content %}
