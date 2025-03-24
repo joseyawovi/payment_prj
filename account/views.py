@@ -8,7 +8,7 @@ def kyc_registration(request):
     account = Account.objects.get(user=user)
 
     try:
-        kyc = KYC.objects.get(KYC.objects.get(user=user))
+        kyc = KYC.objects.get(user=user)
     except:
         kyc = None
     
@@ -25,6 +25,7 @@ def kyc_registration(request):
         form = KYCForm(instance=kyc)
     context = {
         'form':form,
-        'account':account
+        'kyc':kyc
     }
+    print(kyc.image.url)
     return render(request,"account/kyc-form.html",context)
