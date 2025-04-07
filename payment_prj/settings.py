@@ -67,6 +67,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'payment_prj.wsgi.application'
 
 
+LOGIN_URL = "userauths:sign-in"
+LOGOUT_REDIRECT_URL = "userauths:sign-in"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
